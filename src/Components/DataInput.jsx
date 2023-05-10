@@ -14,13 +14,20 @@ const DataInput = () => {
 
     const handleData = async (detail) => {
         console.log(detail);
-        const workbook = new excel.Workbook();
-        await workbook.xlsx.load(detail.value[0]);
-        workbook.eachSheet(function (worksheet, sheetId) {
-            worksheet.eachRow((row) => {
-                console.log(row.values);
+        if (detail.value.length === 1) {
+            const workbook = new excel.Workbook();
+            await workbook.xlsx.load(detail.value[0]);
+            workbook.eachSheet(function (worksheet, sheetId) {
+                worksheet.eachRow((row, rowNumber) => {
+                    // console.log(row.values);
+                });
+
+                console.log(worksheet.rowCount);
             });
-        });
+        } else {
+            console.log('ss');
+        }
+
         // detail.value.forEach((e) => {
         //     Papa.parse(e, {
         //         ...commonConfig,
@@ -39,7 +46,7 @@ const DataInput = () => {
             className='swiper-container'
             onClick={() => console.log(data, csvData)}
         >
-            <Container header={<Header variant='h2'>Container title</Header>}>
+            <Container header={<Header variant='h2'>Excel Data</Header>}>
                 <FileUpload
                     onChange={({ detail }) => handleData(detail)}
                     value={data.data}
@@ -53,7 +60,6 @@ const DataInput = () => {
                         limitShowMore: 'Show more files',
                         errorIconAriaLabel: 'Error',
                     }}
-                    multiple
                     showFileLastModified
                     showFileSize
                     showFileThumbnail
