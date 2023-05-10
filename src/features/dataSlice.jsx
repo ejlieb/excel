@@ -11,6 +11,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     data: [],
+    csvData: [],
 };
 
 const dataSlice = createSlice({
@@ -22,9 +23,13 @@ const dataSlice = createSlice({
             console.log(action);
             state.data = action.payload;
         },
+        setCsvData: (state, action) => {
+            console.log(action.payload);
+            state.csvData.push(action.payload);
+        },
     },
 });
 
 const { reducer, actions } = dataSlice;
-export const { setData } = actions;
+export const { setData, setCsvData } = actions;
 export default dataSlice.reducer;
